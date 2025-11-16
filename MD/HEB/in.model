@@ -1,0 +1,38 @@
+
+# ------------------------ INITIALIZATION ----------------------------
+units 		metal
+dimension	      3
+boundary	      p p p
+atom_style        atomic
+
+# neighbor 2.0 bin
+# neigh_modify every 1 delay 0 check yes
+
+# ----------------------- ATOM DEFINITION ----------------------------
+read_data  POSCAR.data 
+replicate  10 10 10 
+set type 1 type/ratio 2 0.5 12345
+set type 2 type/ratio 3 0.5 23456
+set type 1 type/ratio 4 0.5 34567
+
+
+mass	1	91.224
+mass	2	47.867
+mass	3	92.906
+mass	4	180.95
+mass	5	178.49
+mass	6	95.95
+mass	7	50.942
+mass	8	183.84
+mass	9	10.81 # B
+
+# ------------------------ FORCE FIELDS ------------------------------
+pair_style       nep nep.txt
+pair_coeff       * * 
+
+# dump 		    1 all atom 1 modeling.lammpstrj
+
+write_data        HEB.data
+
+
+

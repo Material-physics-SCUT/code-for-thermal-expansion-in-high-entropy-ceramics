@@ -1,0 +1,31 @@
+variable T index  300 500 700 900 1100 1300
+
+label T_loop
+units metal
+boundary p p p
+atom_style atomic
+
+read_data HEB.data
+
+pair_style      nep nep.txt
+pair_coeff * *
+ 
+reset_timestep 0
+velocity all create ${T} 87287 dist gaussian 
+fix 1 all npt temp ${T} ${T} $(100*dt) iso 0 0 1 
+thermo_style custom step temp pe epair press lx ly lz 
+thermo 1000 
+
+compute actual_T all temp 
+variable Lx equal lx 
+variable V equal vol 
+
+fix 2 all ave/time 100 10 10000 c_actual_T v_Lx v_V file data.${T} 
+run 10000
+unfix 1 
+
+write_data relaxHEB.dat-${T}
+
+clear 
+next T 
+jump SELF T_loop 

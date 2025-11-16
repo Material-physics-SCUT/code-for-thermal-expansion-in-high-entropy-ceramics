@@ -1,0 +1,14 @@
+type      9 Zr Ti Nb Ta Hf Mo V W  C
+version      4
+cutoff       8 4
+n_max        4 4
+basis_size    12 12
+l_max        4 2 
+neuron       50
+lambda_e     1
+lambda_f     1
+lambda_v     0.2
+batch        200
+population   50
+generation   500000
+prediction   0
